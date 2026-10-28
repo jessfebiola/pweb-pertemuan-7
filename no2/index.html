@@ -1,0 +1,228 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechSpace - Register</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <style>
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #173b57, #4e91a4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 15px;
+        }
+
+        .register-card {
+            width: 100%;
+            max-width: 650px;
+            border: none;
+            border-radius: 18px;
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.18);
+        }
+
+        .register-header {
+            background-color: #173b57;
+            color: white;
+            border-radius: 18px 18px 0 0;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .register-body {
+            padding: 30px;
+        }
+
+        .form-control,
+        .form-select {
+            padding: 11px 13px;
+        }
+
+        .btn-register {
+            background-color: #173b57;
+            color: white;
+            padding: 12px;
+        }
+
+        .btn-register:hover {
+            background-color: #285b78;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="card register-card">
+
+        <!-- Header -->
+        <div class="register-header">
+            <h2 class="fw-bold">Create Account</h2>
+            <p class="mb-0">Bergabunglah dengan komunitas TechSpace!</p>
+        </div>
+
+        <!-- Form Register -->
+        <div class="register-body">
+
+            <div id="alertBox" class="alert d-none" role="alert"></div>
+
+            <form id="registerForm">
+
+                <!-- Nama -->
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <label for="firstName" class="form-label">
+                            Nama Depan
+                        </label>
+                        <input type="text" class="form-control"
+                               id="firstName" placeholder="Nama depan"
+                               required>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="lastName" class="form-label">
+                            Nama Belakang
+                        </label>
+                        <input type="text" class="form-control"
+                               id="lastName" placeholder="Nama belakang"
+                               required>
+                    </div>
+                </div>
+
+                <!-- Username -->
+                <div class="mb-3">
+                    <label for="username" class="form-label">
+                        Username
+                    </label>
+                    <input type="text" class="form-control"
+                           id="username" placeholder="Buat username"
+                           minlength="4" required>
+                    <div class="form-text">
+                        Minimal 4 karakter.
+                    </div>
+                </div>
+
+                <!-- Email -->
+                <div class="mb-3">
+                    <label for="email" class="form-label">
+                        Email Address
+                    </label>
+                    <input type="email" class="form-control"
+                           id="email" placeholder="nama@email.com"
+                           required>
+                </div>
+
+                <!-- Password -->
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <label for="password" class="form-label">
+                            Password
+                        </label>
+                        <input type="password" class="form-control"
+                               id="password" placeholder="Buat password"
+                               minlength="8" required>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="confirmPassword" class="form-label">
+                            Konfirmasi Password
+                        </label>
+                        <input type="password" class="form-control"
+                               id="confirmPassword"
+                               placeholder="Ulangi password" required>
+                    </div>
+                </div>
+
+                <!-- Jenis Kelamin -->
+                <div class="mb-3">
+                    <label for="gender" class="form-label">
+                        Jenis Kelamin
+                    </label>
+                    <select class="form-select" id="gender" required>
+                        <option value="" selected disabled>
+                            Pilih jenis kelamin
+                        </option>
+                        <option value="Laki-laki">Laki-laki</option>
+                        <option value="Perempuan">Perempuan</option>
+                        <option value="Tidak ingin menyebutkan">
+                            Tidak ingin menyebutkan
+                        </option>
+                    </select>
+                </div>
+
+                <!-- Persetujuan -->
+                <div class="form-check mb-4">
+                    <input class="form-check-input" type="checkbox"
+                           id="terms" required>
+                    <label class="form-check-label" for="terms">
+                        Saya menyetujui syarat dan ketentuan yang berlaku.
+                    </label>
+                </div>
+
+                <!-- Tombol -->
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-register">
+                        Register
+                    </button>
+
+                    <button type="reset" class="btn btn-outline-secondary">
+                        Reset Form
+                    </button>
+                </div>
+
+                <p class="text-center mt-4 mb-0">
+                    Sudah punya akun?
+                    <a href="#login" id="loginLink">Sign In</a>
+                </p>
+
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById("registerForm");
+        const alertBox = document.getElementById("alertBox");
+
+        form.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const password = document.getElementById("password").value;
+            const confirmPassword =
+                document.getElementById("confirmPassword").value;
+
+            if (password !== confirmPassword) {
+                alertBox.className = "alert alert-danger";
+                alertBox.textContent =
+                    "Registrasi gagal: password tidak cocok.";
+                return;
+            }
+
+            alertBox.className = "alert alert-success";
+            alertBox.textContent =
+                "Registrasi berhasil! Form telah divalidasi.";
+
+            form.reset();
+        });
+
+        form.addEventListener("reset", function() {
+            alertBox.className = "alert d-none";
+            alertBox.textContent = "";
+        });
+
+        document.getElementById("loginLink").addEventListener(
+            "click", function(event) {
+                event.preventDefault();
+                alert("Halaman login belum tersedia.");
+            }
+        );
+    </script>
+
+</body>
+</html>
